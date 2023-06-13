@@ -1,0 +1,57 @@
+[gd_scene load_steps=11 format=3 uid="uid://c1p1v5p6pl31a"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_2jim3"]
+[ext_resource type="PackedScene" uid="uid://bif3iymagnb4i" path="res://avatar/avatar.tscn" id="1_vsuny"]
+[ext_resource type="Texture2D" uid="uid://b8bar7wvqnqdh" path="res://addons/kenney_prototype_textures/green/texture_09.png" id="2_tkog5"]
+[ext_resource type="PackedScene" uid="uid://dpumyp1q56fwd" path="res://ui/button.tscn" id="3_nkasj"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_xoj65"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_pbxea"]
+sky_material = SubResource("ProceduralSkyMaterial_xoj65")
+
+[sub_resource type="Environment" id="Environment_41v64"]
+background_mode = 1
+background_color = Color(0, 0, 0, 0)
+sky = SubResource("Sky_pbxea")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_nomno"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_j3k70"]
+albedo_texture = ExtResource("2_tkog5")
+uv1_scale = Vector3(10, 10, 10)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_18qf2"]
+material = SubResource("StandardMaterial3D_j3k70")
+height = 0.1
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_2jim3")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_41v64")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.693955, -0.623554, 0.360009, -9.83851e-09, 0.5, 0.866026, -0.720018, -0.600983, 0.346977, 0, 0, 0)
+shadow_enabled = true
+
+[node name="Avatar" parent="." instance=ExtResource("1_vsuny")]
+passthrough = true
+
+[node name="Floor" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Floor"]
+shape = SubResource("WorldBoundaryShape3D_nomno")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Floor"]
+mesh = SubResource("CylinderMesh_18qf2")
+
+[node name="TogglePassthrough" parent="." instance=ExtResource("3_nkasj")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -2)
+text = "Toggle passthrough"
+
+[connection signal="button_pressed" from="TogglePassthrough" to="." method="_on_toggle_passthrough_button_pressed"]

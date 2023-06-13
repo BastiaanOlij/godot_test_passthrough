@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://bif3iymagnb4i"]
+
+[ext_resource type="Script" path="res://avatar/avatar.gd" id="1_we4kc"]
+[ext_resource type="PackedScene" uid="uid://yxs5x21va5xj" path="res://avatar/hand.tscn" id="2_rp5w7"]
+
+[node name="Avatar" type="XROrigin3D"]
+script = ExtResource("1_we4kc")
+
+[node name="XRCamera3D" type="XRCamera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.6, 0)
+
+[node name="LeftHand" parent="." instance=ExtResource("2_rp5w7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.5, 1, -0.5)
+
+[node name="RightHand" parent="." instance=ExtResource("2_rp5w7")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.5, 1, -0.5)
+tracker = &"right_hand"

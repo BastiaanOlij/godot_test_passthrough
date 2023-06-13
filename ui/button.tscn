@@ -1,0 +1,125 @@
+[gd_scene load_steps=10 format=3 uid="uid://dpumyp1q56fwd"]
+
+[ext_resource type="Texture2D" uid="uid://7lis7fqigipq" path="res://addons/kenney_prototype_textures/orange/texture_09.png" id="1_6qhl8"]
+[ext_resource type="Script" path="res://ui/button.gd" id="1_w64wl"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_7dbo5"]
+albedo_texture = ExtResource("1_6qhl8")
+uv1_scale = Vector3(8, 1, 2)
+
+[sub_resource type="BoxMesh" id="BoxMesh_xydnc"]
+material = SubResource("StandardMaterial3D_7dbo5")
+size = Vector3(0.361, 0.051, 0.01)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_77epe"]
+size = Vector3(0.361, 0.051, 0.01)
+
+[sub_resource type="Animation" id="Animation_jndqy"]
+resource_name = "pointer_entered"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Text:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0.0106099), Vector3(0, 0, 0.0256318)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Text:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(1, 1, 1), Vector3(1.5, 1.5, 1.5)]
+}
+
+[sub_resource type="Animation" id="Animation_i2prw"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Text:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0.0106099)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Text:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+
+[sub_resource type="Animation" id="Animation_uv30m"]
+resource_name = "pointer_exited"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Text:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0.0256318), Vector3(0, 0, 0.0256318)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Text:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(1.5, 1.5, 1.5), Vector3(1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lrm17"]
+_data = {
+"RESET": SubResource("Animation_i2prw"),
+"pointer_entered": SubResource("Animation_jndqy"),
+"pointer_exited": SubResource("Animation_uv30m")
+}
+
+[node name="Button" type="Area3D"]
+script = ExtResource("1_w64wl")
+text = "Button"
+
+[node name="Background" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_xydnc")
+
+[node name="Text" type="Label3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.0106099)
+pixel_size = 0.001
+text = "Button"
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_77epe")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_lrm17")
+}

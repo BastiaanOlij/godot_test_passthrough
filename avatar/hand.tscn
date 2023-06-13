@@ -1,0 +1,21 @@
+[gd_scene load_steps=4 format=3 uid="uid://yxs5x21va5xj"]
+
+[ext_resource type="Script" path="res://avatar/hand.gd" id="1_1t4pm"]
+[ext_resource type="PackedScene" uid="uid://0x36w6uefdaf" path="res://avatar/pointer.tscn" id="1_py6oq"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_q2jei"]
+radius = 0.05
+height = 0.1
+radial_segments = 16
+rings = 8
+
+[node name="Hand" type="XRController3D"]
+tracker = &"left_hand"
+script = ExtResource("1_1t4pm")
+
+[node name="Test" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_q2jei")
+
+[node name="Pointer" parent="." instance=ExtResource("1_py6oq")]
+
+[connection signal="input_float_changed" from="." to="." method="_on_input_float_changed"]

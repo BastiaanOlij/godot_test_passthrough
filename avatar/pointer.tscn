@@ -1,0 +1,32 @@
+[gd_scene load_steps=5 format=3 uid="uid://0x36w6uefdaf"]
+
+[ext_resource type="Script" path="res://avatar/pointer.gd" id="1_bljp3"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0n7v5"]
+transparency = 1
+shading_mode = 0
+albedo_color = Color(1, 0.27451, 0.211765, 0.537255)
+
+[sub_resource type="BoxMesh" id="BoxMesh_cewdq"]
+material = SubResource("StandardMaterial3D_0n7v5")
+size = Vector3(0.01, 0.01, 10)
+
+[sub_resource type="SphereMesh" id="SphereMesh_dqt41"]
+material = SubResource("StandardMaterial3D_0n7v5")
+radius = 0.02
+height = 0.04
+radial_segments = 16
+rings = 8
+
+[node name="Pointer" type="RayCast3D"]
+target_position = Vector3(0, 0, -10)
+collide_with_areas = true
+script = ExtResource("1_bljp3")
+
+[node name="RayMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -5)
+mesh = SubResource("BoxMesh_cewdq")
+
+[node name="Target" type="MeshInstance3D" parent="."]
+top_level = true
+mesh = SubResource("SphereMesh_dqt41")
